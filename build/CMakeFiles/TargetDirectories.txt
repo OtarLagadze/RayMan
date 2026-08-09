@@ -1,3 +1,0 @@
-/home/otiko/projects/raycaster/build/CMakeFiles/RectRaycaster.dir
-/home/otiko/projects/raycaster/build/CMakeFiles/edit_cache.dir
-/home/otiko/projects/raycaster/build/CMakeFiles/rebuild_cache.dir
