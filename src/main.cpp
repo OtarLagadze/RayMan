@@ -11,18 +11,22 @@
 #include "Bullet.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Cell.h"
+#include "Grid.h"
 #include <algorithm>
 
+int PRECISION[16] = {1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 18, 20, 24, 30, 36};
+
 int32_t main() {
-    int screen_width = 1080;
-    int screen_height = 720;
     int FPS = 300;
+    int grid_resolution = 4;
 
     Vector2 click;
 
     InitWindow(screen_width, screen_height, "rect raycaster");
-    SetTargetFPS(FPS);
 
+    SetTargetFPS(FPS);
+    Grid grid(PRECISION[grid_resolution]);
 
     player = {screen_width / 2, screen_height / 2};
     Enemy enemy = {screen_width / 2, screen_height / 2};
@@ -30,10 +34,12 @@ int32_t main() {
     int counter = 0;
     while (!WindowShouldClose()) {
         dt = GetFrameTime();
+
         //updating window
-        screen_width = GetScreenWidth();
-        screen_height = GetScreenHeight();
         Vector2 origin = {(float)screen_width / 2, (float)screen_height / 2};
+
+        grid_resolution= std::max(0, std::min(grid_resolution - (int)GetMouseWheelMove(), 15));
+        grid = Grid(PRECISION[grid_resolution]);
 
         //updating border
         float margin = 100;
@@ -47,6 +53,8 @@ int32_t main() {
         ClearBackground(WHITE);
         BeginDrawing();
             boundary.draw();
+
+            grid.draw();
 
             //drawing boxes
             Vector2 mouse = GetMousePosition();
@@ -75,8 +83,8 @@ int32_t main() {
 
             
             if (!enemy.is_dead()) {
-                enemy.move(player);
-                enemy.npc.draw();
+                //enemy.move(player);
+                //enemy.npc.draw();
             }
             //enemy.cast_rays(20, 400);
 
